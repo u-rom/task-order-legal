@@ -17,6 +17,7 @@
     }
     h1 { font-size: 1.6rem; margin-bottom: 0.25rem; }
     h2 { font-size: 1.15rem; margin-top: 2rem; border-bottom: 1px solid #dadce0; padding-bottom: 0.35rem; }
+    h3 { font-size: 1rem; margin-top: 1.25rem; }
     p, li { color: #3c4043; }
     .meta { color: #5f6368; font-size: 0.95rem; margin-bottom: 1.5rem; }
     table { width: 100%; border-collapse: collapse; font-size: 0.95rem; margin: 1rem 0; }
@@ -27,7 +28,7 @@
 </head>
 <body>
   <h1>Task Order プライバシーポリシー</h1>
-  <p class="meta">最終更新日: 2026年6月20日<br>お問い合わせ: <a href="mailto:yuya007007@gmail.com">yuya007007@gmail.com</a></p>
+  <p class="meta">最終更新日: 2026年7月2日<br>お問い合わせ: <a href="mailto:yuya007007@gmail.com">yuya007007@gmail.com</a></p>
 
   <h2>1. はじめに</h2>
   <p>Task Order（以下「本アプリ」）は、個人のタスク管理・ポモドーロ・学習マップを支援する iOS アプリです。本ポリシーは、本アプリが扱うデータの種類、保存場所、外部送信の有無を説明します。</p>
@@ -42,7 +43,7 @@
       <tr><td>ワールド / マップ</td><td>ステージ名、進捗、マップ設定</td><td>端末内</td></tr>
       <tr><td>バッジ・称号</td><td>獲得バッジ、候補、おすすめ能力</td><td>端末内</td></tr>
       <tr><td>アプリ設定</td><td>通知音、画面点灯、AI 同意記録など</td><td>端末内</td></tr>
-      <tr><td>installationId</td><td>端末ごとに生成される UUID（利用回数制限用）</td><td>端末内</td></tr>
+      <tr><td>installationId</td><td>端末ごとに生成される UUID（利用回数制限・課金識別用）</td><td>端末内</td></tr>
     </tbody>
   </table>
   <p>端末の iCloud バックアップ等の対象になる場合があります。これは Apple の OS 機能に依存します。</p>
@@ -64,24 +65,58 @@
   <p>Anthropic 側では不正利用監視等のため、API 経由のデータが最大 30 日程度保持される場合があります。</p>
 
   <h3>installationId</h3>
-  <p>乱用防止のため、端末ごとに生成した UUID を API リクエストに含めます。これ単体では個人を特定できません。</p>
+  <p>乱用防止のため、端末ごとに生成した UUID を API リクエストに含めます。これ単体では個人を特定できません。prod 環境では AI 利用上限の判定のため、同一 ID をサーバーから RevenueCat へ問い合わせる場合があります。</p>
 
-  <h2>4. 第三者サービス（AI 以外）</h2>
-  <p>現行バージョン（V1）では、PostHog・Google Analytics・広告 SDK・RevenueCat 等は組み込んでいません。将来導入する場合は本ポリシーを更新し、アプリ内で告知します。</p>
+  <h2>4. アプリ内課金（App Store / RevenueCat）</h2>
+  <p>App Store 版など<strong>課金機能が有効なビルド</strong>では、Premium パック（買い切り）および AI Standard（月額サブスクリプション）を App Store 経由で提供します。</p>
 
-  <h2>5. データの削除</h2>
-  <p>アプリを削除すると端末内データは OS の仕様に従って削除されます。外部 AI データの個別削除要求はお問い合わせ先までご連絡ください。</p>
+  <h3>決済</h3>
+  <p>決済処理は <strong>Apple App Store</strong> が行います。クレジットカード番号等の支払情報は開発者のサーバーへ送信されません。</p>
 
-  <h2>6. セキュリティ</h2>
+  <h3>RevenueCat（RevenueCat, Inc.）</h3>
+  <p>購入状態の管理のため <strong>RevenueCat SDK</strong> を利用します。</p>
+  <table>
+    <thead><tr><th>送信項目</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td>App User ID</td><td>端末の installationId（UUID）</td></tr>
+      <tr><td>購入・サブスク状態</td><td>StoreKit 経由のトランザクション情報</td></tr>
+      <tr><td>端末・SDK 情報</td><td>RevenueCat サービス提供に必要な技術情報</td></tr>
+    </tbody>
+  </table>
+  <p><strong>意図的に送らない情報:</strong> タスク内容、氏名、メール、電話、位置情報、写真。</p>
+  <p>RevenueCat プライバシーポリシー: <a href="https://www.revenuecat.com/privacy">https://www.revenuecat.com/privacy</a></p>
+
+  <h3>サーバー側の購入確認（prod）</h3>
+  <p>AI 利用上限のため、prod の AWS Lambda が RevenueCat API で installationId に紐づく購読状態を確認する場合があります。ログには installationId 全文ではなく prefix のみを記録します。</p>
+
+  <h3>サブスクリプション（AI Standard）</h3>
+  <ul>
+    <li>1 か月ごとに自動更新されます。</li>
+    <li>更新日の 24 時間前までに解約しない限り、App Store アカウントへ料金が請求されます。</li>
+    <li>解約は iOS「設定」→ Apple ID →「サブスクリプション」から行えます。</li>
+    <li>返金は主に Apple 経由で処理されます。</li>
+  </ul>
+
+  <h2>5. その他の第三者サービス（分析・広告）</h2>
+  <p>現行 V1 では PostHog・Google Analytics・広告 SDK は組み込んでいません。将来導入する場合は本ポリシーを更新し、アプリ内で告知します。</p>
+
+  <h2>6. データの削除</h2>
+  <ul>
+    <li><strong>端末内:</strong> アプリ削除で OS の仕様に従い削除されます。</li>
+    <li><strong>AI データ:</strong> 個別削除要求はお問い合わせ先まで（Anthropic のポリシーに依存）。</li>
+    <li><strong>課金データ:</strong> 購入履歴は Apple / RevenueCat 側に保持されます。「購入情報を復元」は StoreKit / RevenueCat 経由です。</li>
+  </ul>
+
+  <h2>7. セキュリティ</h2>
   <p>Anthropic API キーはアプリに埋め込みません。通信は HTTPS を使用します。</p>
 
-  <h2>7. お子様の利用</h2>
+  <h2>8. お子様の利用</h2>
   <p>本アプリは 13 歳未満を対象としたサービスではありません。</p>
 
-  <h2>8. ポリシーの変更</h2>
+  <h2>9. ポリシーの変更</h2>
   <p>内容を変更する場合、本ページの最終更新日を更新し、重要な変更はアプリ内で告知します。</p>
 
-  <h2>9. お問い合わせ</h2>
+  <h2>10. お問い合わせ</h2>
   <p>メール: <a href="mailto:yuya007007@gmail.com">yuya007007@gmail.com</a></p>
 </body>
 </html>
