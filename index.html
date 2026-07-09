@@ -28,7 +28,7 @@
 </head>
 <body>
   <h1>Task Order プライバシーポリシー</h1>
-  <p class="meta">最終更新日: 2026年7月2日<br>お問い合わせ: <a href="mailto:yuya007007@gmail.com">yuya007007@gmail.com</a></p>
+  <p class="meta">最終更新日: 2026年7月10日<br>お問い合わせ: <a href="mailto:yuya007007@gmail.com">yuya007007@gmail.com</a></p>
 
   <h2>1. はじめに</h2>
   <p>Task Order（以下「本アプリ」）は、個人のタスク管理・ポモドーロ・学習マップを支援する iOS アプリです。本ポリシーは、本アプリが扱うデータの種類、保存場所、外部送信の有無を説明します。</p>
@@ -68,7 +68,15 @@
   <p>乱用防止のため、端末ごとに生成した UUID を API リクエストに含めます。これ単体では個人を特定できません。prod 環境では AI 利用上限の判定のため、同一 ID をサーバーから RevenueCat へ問い合わせる場合があります。</p>
 
   <h2>4. アプリ内課金（App Store / RevenueCat）</h2>
-  <p>App Store 版など<strong>課金機能が有効なビルド</strong>では、Premium パック（買い切り）および AI Standard（月額サブスクリプション）を App Store 経由で提供します。</p>
+  <p>App Store 版など<strong>課金機能が有効なビルド</strong>では、次のアプリ内課金を App Store 経由で提供します。</p>
+  <table>
+    <thead><tr><th>商品</th><th>形態</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Pro（買い切り・非消耗）</strong></td><td>非消耗型 IAP</td><td>2枠目以降のワールド枠・マップ演出・バッジ演出などを<strong>永久</strong>に解放</td></tr>
+      <tr><td><strong>AIチケット</strong></td><td>消耗型 IAP</td><td>AI 再計算枠の追加。<strong>消耗品のため復元できません</strong></td></tr>
+      <tr><td><strong>Tip（応援）</strong></td><td>消耗型 IAP</td><td>開発への応援。機能解放なし。<strong>消耗品のため復元できません</strong></td></tr>
+    </tbody>
+  </table>
 
   <h3>決済</h3>
   <p>決済処理は <strong>Apple App Store</strong> が行います。クレジットカード番号等の支払情報は開発者のサーバーへ送信されません。</p>
@@ -79,7 +87,7 @@
     <thead><tr><th>送信項目</th><th>内容</th></tr></thead>
     <tbody>
       <tr><td>App User ID</td><td>端末の installationId（UUID）</td></tr>
-      <tr><td>購入・サブスク状態</td><td>StoreKit 経由のトランザクション情報</td></tr>
+      <tr><td>購入状態</td><td>StoreKit 経由のトランザクション情報</td></tr>
       <tr><td>端末・SDK 情報</td><td>RevenueCat サービス提供に必要な技術情報</td></tr>
     </tbody>
   </table>
@@ -87,14 +95,12 @@
   <p>RevenueCat プライバシーポリシー: <a href="https://www.revenuecat.com/privacy">https://www.revenuecat.com/privacy</a></p>
 
   <h3>サーバー側の購入確認（prod）</h3>
-  <p>AI 利用上限のため、prod の AWS Lambda が RevenueCat API で installationId に紐づく購読状態を確認する場合があります。ログには installationId 全文ではなく prefix のみを記録します。</p>
+  <p>AI 利用上限のため、prod の AWS Lambda が RevenueCat API で installationId に紐づく購入状態を確認する場合があります。ログには installationId 全文ではなく prefix のみを記録します。</p>
 
-  <h3>サブスクリプション（AI Standard）</h3>
+  <h3>購入の復元</h3>
   <ul>
-    <li>1 か月ごとに自動更新されます。</li>
-    <li>更新日の 24 時間前までに解約しない限り、App Store アカウントへ料金が請求されます。</li>
-    <li>解約は iOS「設定」→ Apple ID →「サブスクリプション」から行えます。</li>
-    <li>返金は主に Apple 経由で処理されます。</li>
+    <li><strong>Pro（非消耗）:</strong> アプリ内の「購入情報を復元」から復元できます。</li>
+    <li><strong>AIチケット / Tip（消耗）:</strong> 消耗品のため復元できません。</li>
   </ul>
 
   <h2>5. その他の第三者サービス（分析・広告）</h2>
@@ -104,7 +110,7 @@
   <ul>
     <li><strong>端末内:</strong> アプリ削除で OS の仕様に従い削除されます。</li>
     <li><strong>AI データ:</strong> 個別削除要求はお問い合わせ先まで（Anthropic のポリシーに依存）。</li>
-    <li><strong>課金データ:</strong> 購入履歴は Apple / RevenueCat 側に保持されます。「購入情報を復元」は StoreKit / RevenueCat 経由です。</li>
+    <li><strong>課金データ:</strong> 購入履歴は Apple / RevenueCat 側に保持されます。</li>
   </ul>
 
   <h2>7. セキュリティ</h2>
@@ -114,7 +120,7 @@
   <p>本アプリは 13 歳未満を対象としたサービスではありません。</p>
 
   <h2>9. ポリシーの変更</h2>
-  <p>内容を変更する場合、本ページの最終更新日を更新し、重要な変更はアプリ内で告知します。</p>
+  <p>内容を変更する場合は本ページの最終更新日を更新し、重要な変更はアプリ内で告知します。</p>
 
   <h2>10. お問い合わせ</h2>
   <p>メール: <a href="mailto:yuya007007@gmail.com">yuya007007@gmail.com</a></p>
