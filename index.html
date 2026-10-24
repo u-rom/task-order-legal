@@ -28,101 +28,242 @@
 </head>
 <body>
   <h1>Task Order プライバシーポリシー</h1>
-  <p class="meta">最終更新日: 2026年7月10日<br>お問い合わせ: <a href="mailto:yuya007007@gmail.com">yuya007007@gmail.com</a></p>
+  <p class="meta">最終更新日: 2026年10月25日<br>お問い合わせ: <a href="mailto:yuya007007@gmail.com">yuya007007@gmail.com</a></p>
 
-  <h2>1. はじめに</h2>
-  <p>Task Order（以下「本アプリ」）は、個人のタスク管理・ポモドーロ・学習マップを支援する iOS アプリです。本ポリシーは、本アプリが扱うデータの種類、保存場所、外部送信の有無を説明します。</p>
-
-  <h2>2. 収集・保存するデータ（端末内）</h2>
-  <p>本アプリは<strong>アカウント登録を行いません</strong>。以下のデータは<strong>端末内の SQLite データベース</strong>に保存され、開発者のサーバーへ自動同期されることはありません（AI 機能を除く）。</p>
-  <table>
-    <thead><tr><th>データ</th><th>内容</th><th>保存場所</th></tr></thead>
-    <tbody>
-      <tr><td>タスク</td><td>タイトル、コメント、完了状態、並び順</td><td>端末内</td></tr>
-      <tr><td>ポモドーロ</td><td>セッション記録、作業時間設定</td><td>端末内</td></tr>
-      <tr><td>ワールド / マップ</td><td>ステージ名、進捗、マップ設定</td><td>端末内</td></tr>
-      <tr><td>バッジ・称号</td><td>獲得バッジ、候補、おすすめ能力</td><td>端末内</td></tr>
-      <tr><td>アプリ設定</td><td>通知音、画面点灯、AI 同意記録など</td><td>端末内</td></tr>
-      <tr><td>installationId</td><td>端末ごとに生成される UUID（利用回数制限・課金識別用）</td><td>端末内</td></tr>
-    </tbody>
-  </table>
-  <p>端末の iCloud バックアップ等の対象になる場合があります。これは Apple の OS 機能に依存します。</p>
-
-  <h2>3. AI 機能利用時に外部送信されるデータ</h2>
-  <p>バッジ再計算・おすすめ能力の生成など<strong> AI 機能を利用した場合に限り</strong>、タスク名・コメント・ワールド名・バッジ名等のテキストがインターネット経由で外部サービスへ送信されます。</p>
-  <p><strong>意図的に送信しない情報:</strong> 氏名、メールアドレス、電話番号、位置情報、連絡先、写真など個人を特定する情報。</p>
-
-  <h3>送信先</h3>
-  <ul>
-    <li><strong>Amazon Web Services（AWS）</strong> — リージョン ap-northeast-1（東京）。API Gateway / Lambda 上の自前バックエンド。</li>
-    <li><strong>Anthropic PBC</strong> — Claude API（商用 API）。バックエンドから AI 解析のため送信。</li>
-  </ul>
-
-  <h3>モデル学習への利用</h3>
-  <p>Anthropic の商用 API を利用しているため、送信内容が Claude モデルの学習に使われることはありません。</p>
-
-  <h3>データの保持</h3>
-  <p>Anthropic 側では不正利用監視等のため、API 経由のデータが最大 30 日程度保持される場合があります。</p>
-
-  <h3>installationId</h3>
-  <p>乱用防止のため、端末ごとに生成した UUID を API リクエストに含めます。これ単体では個人を特定できません。prod 環境では AI 利用上限の判定のため、同一 ID をサーバーから RevenueCat へ問い合わせる場合があります。</p>
-
-  <h2>4. アプリ内課金（App Store / RevenueCat）</h2>
-  <p>App Store 版など<strong>課金機能が有効なビルド</strong>では、次のアプリ内課金を App Store 経由で提供します。</p>
-  <table>
-    <thead><tr><th>商品</th><th>形態</th><th>内容</th></tr></thead>
-    <tbody>
-      <tr><td><strong>Pro（買い切り・非消耗）</strong></td><td>非消耗型 IAP</td><td>2枠目以降のワールド枠・マップ演出・バッジ演出などを<strong>永久</strong>に解放</td></tr>
-      <tr><td><strong>AIチケット</strong></td><td>消耗型 IAP</td><td>AI 再計算枠の追加。<strong>消耗品のため復元できません</strong></td></tr>
-      <tr><td><strong>Tip（応援）</strong></td><td>消耗型 IAP</td><td>開発への応援。機能解放なし。<strong>消耗品のため復元できません</strong></td></tr>
-    </tbody>
-  </table>
-
-  <h3>決済</h3>
-  <p>決済処理は <strong>Apple App Store</strong> が行います。クレジットカード番号等の支払情報は開発者のサーバーへ送信されません。</p>
-
-  <h3>RevenueCat（RevenueCat, Inc.）</h3>
-  <p>購入状態の管理のため <strong>RevenueCat SDK</strong> を利用します。</p>
-  <table>
-    <thead><tr><th>送信項目</th><th>内容</th></tr></thead>
-    <tbody>
-      <tr><td>App User ID</td><td>端末の installationId（UUID）</td></tr>
-      <tr><td>購入状態</td><td>StoreKit 経由のトランザクション情報</td></tr>
-      <tr><td>端末・SDK 情報</td><td>RevenueCat サービス提供に必要な技術情報</td></tr>
-    </tbody>
-  </table>
-  <p><strong>意図的に送らない情報:</strong> タスク内容、氏名、メール、電話、位置情報、写真。</p>
-  <p>RevenueCat プライバシーポリシー: <a href="https://www.revenuecat.com/privacy">https://www.revenuecat.com/privacy</a></p>
-
-  <h3>サーバー側の購入確認（prod）</h3>
-  <p>AI 利用上限のため、prod の AWS Lambda が RevenueCat API で installationId に紐づく購入状態を確認する場合があります。ログには installationId 全文ではなく prefix のみを記録します。</p>
-
-  <h3>購入の復元</h3>
-  <ul>
-    <li><strong>Pro（非消耗）:</strong> アプリ内の「購入情報を復元」から復元できます。</li>
-    <li><strong>AIチケット / Tip（消耗）:</strong> 消耗品のため復元できません。</li>
-  </ul>
-
-  <h2>5. その他の第三者サービス（分析・広告）</h2>
-  <p>現行 V1 では PostHog・Google Analytics・広告 SDK は組み込んでいません。将来導入する場合は本ポリシーを更新し、アプリ内で告知します。</p>
-
-  <h2>6. データの削除</h2>
-  <ul>
-    <li><strong>端末内:</strong> アプリ削除で OS の仕様に従い削除されます。</li>
-    <li><strong>AI データ:</strong> 個別削除要求はお問い合わせ先まで（Anthropic のポリシーに依存）。</li>
-    <li><strong>課金データ:</strong> 購入履歴は Apple / RevenueCat 側に保持されます。</li>
-  </ul>
-
-  <h2>7. セキュリティ</h2>
-  <p>Anthropic API キーはアプリに埋め込みません。通信は HTTPS を使用します。</p>
-
-  <h2>8. お子様の利用</h2>
-  <p>本アプリは 13 歳未満を対象としたサービスではありません。</p>
-
-  <h2>9. ポリシーの変更</h2>
-  <p>内容を変更する場合は本ページの最終更新日を更新し、重要な変更はアプリ内で告知します。</p>
-
-  <h2>10. お問い合わせ</h2>
-  <p>メール: <a href="mailto:yuya007007@gmail.com">yuya007007@gmail.com</a></p>
+<h2>1. はじめに</h2>
+<p>Task Order（以下「本アプリ」）は、個人のタスク管理・ポモドーロ・学習マップを支援する iOS アプリです。本ポリシーは、本アプリが扱うデータの種類、保存場所、外部送信の有無を説明します。</p>
+<h2>2. 収集・保存するデータ（端末内）</h2>
+<p>本アプリのタスク・ポモドーロ・記録などの機能は、<strong>アカウント登録なしで</strong> 使えます。以下のデータは <strong>端末内の SQLite データベース</strong> に保存され、開発者のサーバーへ自動同期されることはありません（AI 機能を除く、後述）。AI 機能を使う場合に限り、AIアカウント（Sign in with Apple）でのログインが必要です（§3.1）。</p>
+<table>
+<thead>
+<tr>
+<th>データ</th>
+<th>内容</th>
+<th>保存場所</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>タスク</td>
+<td>タイトル、コメント、完了状態、並び順</td>
+<td>端末内</td>
+</tr>
+<tr>
+<td>ポモドーロ</td>
+<td>セッション記録、作業時間設定</td>
+<td>端末内</td>
+</tr>
+<tr>
+<td>ワールド / マップ</td>
+<td>ステージ名、進捗、マップ設定</td>
+<td>端末内</td>
+</tr>
+<tr>
+<td>バッジ・称号</td>
+<td>獲得バッジ、候補、おすすめ能力</td>
+<td>端末内</td>
+</tr>
+<tr>
+<td>アプリ設定</td>
+<td>通知音、画面点灯、AI 同意記録など</td>
+<td>端末内</td>
+</tr>
+<tr>
+<td>installationId</td>
+<td>端末ごとに生成される UUID（AIアカウントへのログイン前の課金識別用）</td>
+<td>端末内</td>
+</tr>
+<tr>
+<td>AIアカウントのログイン情報</td>
+<td>サーバーが発行した利用者ID、アクセス用・更新用のトークン</td>
+<td>端末の Keychain（この端末だけに保存。バックアップや別の端末へは移りません）</td>
+</tr>
+<tr>
+<td>反映を確認中のAIチケット購入</td>
+<td>購入が完了したのに残数への反映を確認できていない購入の取引ID（再確認のため。AIアカウントごと、最大50件）</td>
+<td>端末内（反映の確認、またはAIアカウントの削除で消去）</td>
+</tr>
+</tbody>
+</table>
+<p>端末の iCloud バックアップや iTunes バックアップの対象になる場合があります。これは Apple の OS 機能に依存します。</p>
+<h2>3. AI 機能利用時に外部送信されるデータ</h2>
+<p>バッジ再計算・おすすめ能力の生成など <strong>AI 機能を利用した場合に限り</strong>、以下のテキストデータが <strong>インターネット経由で外部サービスへ送信</strong> されます。</p>
+<table>
+<thead>
+<tr>
+<th>送信される項目</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>タスク名</td>
+<td>完了タスクのタイトル</td>
+</tr>
+<tr>
+<td>タスクコメント</td>
+<td>ポモドーロ完了時のメモ（最大 500 文字程度）</td>
+</tr>
+<tr>
+<td>ワールド名 / ステージ名</td>
+<td>マップ上の名称</td>
+</tr>
+<tr>
+<td>バッジ名・キーワード</td>
+<td>獲得済みバッジや候補の名称</td>
+</tr>
+</tbody>
+</table>
+<p><strong>意図的に送信しない情報:</strong> 氏名、メールアドレス、電話番号、位置情報、連絡先、写真など個人を特定する情報。</p>
+<p>開発者のサーバーは、AIに送るテキストを AI の生成のために Anthropic へ中継するだけで、保存しません。サーバーに残すのは、利用回数（月ごとの無料枠の使用数・AIチケットの残数）などの記録だけです。</p>
+<h3>3.1 AIアカウント（Sign in with Apple）</h3>
+<p>AI 機能（AIの生成・AIチケットの購入）を使うときだけ、Sign in with Apple でのログインを求めます。タスク・Canvas・ポモドーロ・記録、Pro や応援の購入・復元にはログインは不要です。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>扱い</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple から受け取る情報</td>
+<td>Apple が署名した本人確認情報（Apple が発行するこのアプリ用の識別子を含む）。<strong>名前とメールアドレスは求めません</strong></td>
+</tr>
+<tr>
+<td>サーバーが発行する利用者ID</td>
+<td>同じ Apple アカウントには同じ利用者IDを使い、AIの月ごとの無料枠と購入したAIチケットを管理します。端末をまたいで共有されます</td>
+</tr>
+<tr>
+<td>AIに送るテキストとの関係</td>
+<td>AI 機能のリクエストには利用者IDを付けて送るため、送信したテキストはサーバー上で利用者IDと結び付きます</td>
+</tr>
+<tr>
+<td>ログイン情報の保存</td>
+<td>アクセス用・更新用のトークンは端末の Keychain にだけ保存します。サーバーにはトークンのハッシュだけを保存します</td>
+</tr>
+</tbody>
+</table>
+<p>アクセス用トークンの有効期限は15分で、期限が切れると更新用トークンで自動的に更新します。更新用トークンの有効期限は30日で、更新のたびに新しくなります。</p>
+<p>iPhone・iPad の設定で「Appleでサインイン」の使用を停止した場合や、Apple アカウントを削除した場合は、Apple からの通知を受けてサーバー側のセッションをすべて無効にします。次にAIを使うときに、もう一度ログインが必要になります。</p>
+<p>ログアウトすると、端末のトークンを必ず消し、サーバー側のセッションの無効化も要求します（通信できなかった場合でも端末のトークンは消え、サーバー側のセッションは、更新用トークンが使われないまま有効期限（30日）を過ぎると使えなくなります）。AIの無料枠と購入したAIチケットはサーバーに残り、同じ Apple アカウントで再ログインすると続けて使えます。</p>
+<h3>送信先</h3>
+<ol>
+<li><strong>Amazon Web Services（AWS）</strong> — リージョン: <strong>ap-northeast-1（東京）</strong><br />
+   API Gateway / Lambda 上の自前バックエンドがリクエストを受け付けます。</li>
+<li><strong>Anthropic PBC</strong> — Claude API（商用 API）<br />
+   バックエンドから AI 解析のため送信されます。</li>
+</ol>
+<h3>モデル学習への利用</h3>
+<p>Anthropic の <strong>商用 API</strong> を利用しているため、送信された内容が Claude モデルの <strong>学習（ファインチューニング）に使われることはありません</strong>（Anthropic Commercial Terms に準拠）。</p>
+<h3>データの保持</h3>
+<p>Anthropic 側では、不正利用の監視・サービス改善等のため、API 経由のデータが <strong>最大 30 日程度</strong> 保持される場合があります。Zero Data Retention（ZDR）は現時点では未設定です。</p>
+<h3>利用者ID</h3>
+<p>AI 機能の API リクエストには、AIアカウントの利用者IDとアクセス用トークンを含めます。AIの利用回数とAIチケットの残数は、この利用者IDごとにサーバーで管理します。</p>
+<p>App Store 版では、AIチケットの購入を確認するため、サーバーから RevenueCat（後述）へ利用者IDで購入状態を問い合わせます。</p>
+<h2>4. アプリ内課金（App Store / RevenueCat）</h2>
+<p>App Store 版など <strong>課金機能が有効なビルド</strong> では、次のアプリ内課金を App Store 経由で提供します。</p>
+<table>
+<thead>
+<tr>
+<th>商品</th>
+<th>形態</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pro（買い切り・非消耗）</strong></td>
+<td>非消耗型 IAP</td>
+<td>2枠目以降のワールド枠・マップ演出・バッジ演出などを <strong>永久</strong> に解放</td>
+</tr>
+<tr>
+<td><strong>AIチケット</strong></td>
+<td>消耗型 IAP</td>
+<td>AI 再計算枠の追加。<strong>消耗品のため復元できません</strong></td>
+</tr>
+<tr>
+<td><strong>Tip（応援）</strong></td>
+<td>消耗型 IAP</td>
+<td>開発への応援。機能解放なし。<strong>消耗品のため復元できません</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>決済</h3>
+<ul>
+<li>決済処理は <strong>Apple App Store</strong> が行います。</li>
+<li>クレジットカード番号等の支払情報は <strong>開発者のサーバーへ送信されません</strong>。</li>
+</ul>
+<h3>RevenueCat（RevenueCat, Inc.）</h3>
+<p>購入状態（entitlement）の管理のため、<strong>RevenueCat SDK</strong>（<code>purchases_flutter</code>）を利用します。</p>
+<table>
+<thead>
+<tr>
+<th>送信される項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>App User ID</td>
+<td>最初は端末の <code>installationId</code>（UUID）。AIチケットを初めて購入するときに、AIアカウントの利用者IDへ切り替えます（AIからログアウトしても戻しません）</td>
+</tr>
+<tr>
+<td>購入状態</td>
+<td>StoreKit 経由のトランザクション情報、entitlement の有無</td>
+</tr>
+<tr>
+<td>端末・SDK 情報</td>
+<td>RevenueCat SDK がサービス提供に必要な技術情報（詳細は RevenueCat のポリシーに従う）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>意図的に RevenueCat へ送らない情報:</strong> タスク内容、氏名、メールアドレス、電話番号、位置情報、写真。</p>
+<p>RevenueCat のプライバシーポリシー: <a href="https://www.revenuecat.com/privacy">https://www.revenuecat.com/privacy</a></p>
+<h3>サーバー側の購入確認</h3>
+<p>AIチケットの加算を一度だけ正しく行うため、開発者のサーバー（AWS Lambda）が RevenueCat API を用い、利用者IDに紐づく購入状態を確認します。購入が完了したのに残数へ反映されていない場合は、アプリの起動時・ログイン後・「購入したチケットを確認」の操作時に、その利用者IDの購入履歴だけを RevenueCat に問い合わせて照合します。CloudWatch ログには利用者IDの全文・トークン・Apple の識別子を記録しません（利用者IDは先頭の一部のみ）。</p>
+<h3>購入の復元</h3>
+<ul>
+<li><strong>Pro（非消耗）:</strong> アプリ内の「購入情報を復元」から StoreKit / RevenueCat 経由で復元できます。</li>
+<li><strong>AIチケット / Tip（消耗）:</strong> 消耗品のため復元できません。AIチケットの残数はAIアカウントごとにサーバーで管理するため、同じ Apple アカウントでログインすれば別の端末でも使えます。</li>
+<li>AIチケットの購入で App User ID が切り替わった後に Pro の表示が消えた場合は、「購入情報を復元」を実行してください。</li>
+</ul>
+<h2>5. その他の第三者サービス（分析・広告）</h2>
+<p>現行バージョン（V1）では、以下の <strong>分析・広告 SDK は組み込んでいません</strong>。</p>
+<ul>
+<li>PostHog、Google Analytics、Firebase Analytics 等の行動分析</li>
+<li>広告ネットワーク</li>
+</ul>
+<p>将来導入する場合は、本ポリシーを更新し、アプリ内で告知します。</p>
+<h2>6. データの削除</h2>
+<ul>
+<li><strong>端末内データ:</strong> アプリを削除すると、端末内の SQLite データは OS の仕様に従って削除されます。</li>
+<li><strong>AIアカウントの削除（アプリ内）:</strong> 設定（ポモドーロ通知 → アプリ情報 →「AIアカウント」）から削除できます。削除の前に、未使用のAIチケットの数、削除すると失効して元に戻せないこと、Apple への返金申請の方法を表示し、明示的な同意と Apple での再認証を求めます。</li>
+<li>削除すると、Apple の識別子と利用者IDの対応、ログイン情報（セッション・トークン）、AIの無料枠の記録（当月・過去月）、未使用のAIチケットの残数を消去し、Sign in with Apple の許可を Apple 側で取り消します。</li>
+<li>同じ購入が二重に加算されないよう、購入の取引IDから作った識別キーだけをサーバーに残します。所有者・商品・残数・日時などは残しません。</li>
+<li>購入したのに加算されていないAIチケットがあった場合も、削除後は回復できません。</li>
+<li>削除が途中で止まった場合は、完了とは表示せず、Apple での再認証で続けられます。</li>
+<li>端末に残っている「反映を確認中のAIチケット購入」の記録も消去します。</li>
+<li>タスクなどの端末内データと、Pro の App Store 購入は削除されません。</li>
+<li>削除後にもう一度ログインすると、新しいAIアカウントになり、削除前の残数は戻りません。</li>
+<li><strong>外部 AI データ:</strong> Anthropic 側の保持期間経過後に削除されます。個別削除要求は問い合わせ先までご連絡ください（対応可否は Anthropic のポリシーに依存します）。</li>
+<li><strong>サーバーのログ:</strong> 開発者のサーバーのログ（AWS CloudWatch Logs）は30日で自動的に削除されます。ログには、AIに送ったテキスト、トークン、Apple の識別子、取引IDや利用者IDの全文を記録しない設計にしています（件数・理由・IDの先頭の一部だけを記録します。予期しない障害のときは、原因調査のためのエラー情報を記録します）。AIアカウントを削除しても、削除前のログは30日が過ぎるまで残ります。</li>
+<li><strong>サーバーのバックアップ:</strong> サーバーのデータベース（Amazon DynamoDB）のバックアップ（ポイントインタイムリカバリ・手動バックアップ）は取得していません。削除したデータがバックアップから戻ることはありません。</li>
+<li><strong>課金データ:</strong> 購入履歴は Apple および RevenueCat 側に保持されます。RevenueCat 側データの削除要求は問い合わせ先までご連絡ください（対応可否は RevenueCat のポリシーに依存します）。</li>
+</ul>
+<h2>7. セキュリティ</h2>
+<ul>
+<li>Anthropic API キーは <strong>アプリに埋め込まず</strong>、AWS Secrets Manager でサーバー側のみが保持します。</li>
+<li>アプリに埋め込まれるのは、サーバーの入口で使う接続用のキーだけです。AI 機能はこれに加えて、AIアカウントのアクセス用トークンでの本人確認を必須にしています。</li>
+<li>Sign in with Apple の秘密鍵はアプリに含めず、AWS Secrets Manager でサーバー側のみが保持します。</li>
+<li>通信は HTTPS を使用します。</li>
+</ul>
+<h2>8. お子様の利用</h2>
+<p>本アプリは 13 歳未満を対象としたサービスではありません。</p>
+<h2>9. ポリシーの変更</h2>
+<p>内容を変更する場合、本ページの「最終更新日」を更新し、重要な変更はアプリ内で告知します。</p>
+<h2>10. お問い合わせ</h2>
+<p>本ポリシーまたはデータ取扱いに関するお問い合わせ:</p>
+<p><strong>メール:</strong> yuya007007@gmail.com</p>
 </body>
 </html>
